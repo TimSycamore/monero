@@ -135,10 +135,15 @@ jobs:
       run: HOMEBREW_NO_AUTO_UPDATE=1 brew install boost hidapi zmq libpgm miniupnpc ldns expat libunwind-headers protobuf ccache
     - name: install Python dependencies
       run: pip install requests psutil monotonic
-    - name: dump ifconfig
-      run: ifconfig
     - name: create loopback alias
-      run: sudo ifconfig lo0 alias 127.0.0.2
+      run: |
+        ifconfig
+        echo "================================="
+        echo "Creating loopback interface alias"
+        sudo ifconfig lo0 alias 127.0.0.2
+        echo "Created loopback interface alias"
+        echo "================================="
+        ifconfig
     - name: tests
       env:
         CTEST_OUTPUT_ON_FAILURE: ON
